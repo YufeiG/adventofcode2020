@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def a():
+def a() -> int:
 	# solution for part 1
 	with open("input2.txt", "r") as f:
 		string = f.read()
@@ -18,9 +18,9 @@ def a():
 			count = pw.count(letter)
 			if count >= lower and count <= upper:
 				c += 1
-		print(c)
+		return c
 
-def b():
+def b() -> int:
 	# solution for part 2
 	with open("input2.txt", "r") as f:
 		string = f.read()
@@ -39,6 +39,6 @@ def b():
 			b = pw[upper-1] == letter
 			if a != b:
 				c += 1
-		print(c)
+		return c
 
-b()
+print(b())

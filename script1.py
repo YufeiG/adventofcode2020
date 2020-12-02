@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-def a():
+def a() -> int:
 	# initial solution for part1
 	with open("input1.txt", "r") as f:
 		string = f.read()
@@ -11,7 +11,7 @@ def a():
 				if int(numbs[i]) + int(numbs[j]) == 2020:
 					return int(numbs[i])*int(numbs[j])
 
-def b():
+def b() -> int:
 	# initial solution for part2
 	with open("input1.txt", "r") as f:
 		string = f.read()
@@ -23,7 +23,7 @@ def b():
 					if int(numbs[i]) + int(numbs[j]) + int(numbs[k]) == 2020:
 						return int(numbs[i])*int(numbs[j])*int(numbs[k])
 
-def c():
+def c() -> int:
 	# made it faster by casting to int up front
 	with open("input1.txt", "r") as f:
 		string = f.read()
@@ -35,7 +35,7 @@ def c():
 					if numbs[i] + numbs[j] + numbs[k] == 2020:
 						return numbs[i]*numbs[j]*numbs[k]
 
-def d():
+def d() -> int:
 	from collections import defaultdict
 
 	# got rid of inner loop by using a dict

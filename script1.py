@@ -51,7 +51,6 @@ def d() -> int:
 				indices = numbDict.get(s)
 				# a value exists that sum to 2020
 				# check if this is a value we already are using
-				if indices is not None and len(indices.difference(set([i, j]))) > 0:
+				if indices is not None and len(indices - set([i, j])) > 0:
 					return numbs[i]*numbs[j]*s
-
 print(d())

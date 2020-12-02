@@ -40,7 +40,7 @@ def d() -> int:
 
 	# got rid of inner loop by using a dict
 	with open("input1.txt", "r") as f:
-		numbs = [int(x) for x in f.read().split()]
+		numbs = [int(x) for x in f]
 		numbDict = defaultdict(set)
 		for i, v in enumerate(numbs):
 			numbDict[v].add(i)

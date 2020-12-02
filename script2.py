@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def a():
 	# solution for part 1
 	with open("input2.txt", "r") as f:

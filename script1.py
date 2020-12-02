@@ -36,33 +36,23 @@ def c():
 						return numbs[i]*numbs[j]*numbs[k]
 
 def d():
-	# got rid of inner loop by using a set
+	from collections import defaultdict
+
+	# got rid of inner loop by using a dict
 	with open("input1.txt", "r") as f:
-		string = f.read()
-		numbs = [int(x) for x in string.split()]
-		numbDict = {}
-		t = len(numbs)
-
+		numbs = [int(x) for x in f.read().split()]
+		numbDict = defaultdict(set)
 		for i, v in enumerate(numbs):
-			x = numbDict.get(v, [])
-			x.append(i)
-			numbDict[v] = x
+			numbDict[v].add(i)
 
-		numSet = set(numbs)
-		for i in range(t):
-			for j in range(i+1, t):
-				a = numbs[i]
-				b = numbs[j]
-				s = 2020 - (a + b)
-
+		for i in range(len(numbs)):
+			for j in range(i+1, len(numbs)):
+				s = 2020 - (numbs[i] + numbs[j])
 				indices = numbDict.get(s)
 				if indices is not None:
-					assert len(indices) > 0
-					if i in indices:
-						indices.remove(i)
-					if j in indices:
-						indices.remove(j)
-					if len(indices) > 0:
-						return a*b*s
+					# a value exists that sum to 2020
+					# check if this is a value we already are using
+					if len(indices.difference(set([i, j]))) > 0:
+						return numbs[i]*numbs[j]*s
 
 print(d())

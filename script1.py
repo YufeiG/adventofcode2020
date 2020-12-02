@@ -49,10 +49,9 @@ def d() -> int:
 			for j in range(i+1, len(numbs)):
 				s = 2020 - (numbs[i] + numbs[j])
 				indices = numbDict.get(s)
-				if indices is not None:
-					# a value exists that sum to 2020
-					# check if this is a value we already are using
-					if len(indices.difference(set([i, j]))) > 0:
-						return numbs[i]*numbs[j]*s
+				# a value exists that sum to 2020
+				# check if this is a value we already are using
+				if indices is not None and len(indices.difference(set([i, j]))) > 0:
+					return numbs[i]*numbs[j]*s
 
 print(d())

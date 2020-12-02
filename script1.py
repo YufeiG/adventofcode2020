@@ -31,8 +31,11 @@ def c() -> int:
 		t = len(numbs)
 		for i in range(t):
 			for j in range(i+1, t):
+				s = numbs[i] + numbs[j]
+				if s > 2020: # early abort
+					continue
 				for k in range(j+1, t):
-					if numbs[i] + numbs[j] + numbs[k] == 2020:
+					if s + numbs[k] == 2020:
 						return numbs[i]*numbs[j]*numbs[k]
 
 def d() -> int:

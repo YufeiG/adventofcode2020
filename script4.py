@@ -49,15 +49,15 @@ def are_all_keys_valid(passport):
 
 def is_pp_valid(passport):
 	all_keys = set(passport.keys())
-	inter = all_keys.intersection(set(keys))
-	if len(inter) == len(keys): # all required keys are present
+	inter = all_keys.intersection(set(mandatory_keys))
+	if len(inter) == len(mandatory_keys): # all required keys are present
 		return are_all_keys_valid(passport)
 
-	if len(inter) < len(keys): # some required keys are missing
+	if len(inter) < len(mandatory_keys): # some required keys are missing
 		return False
-	left_over_keys = all_keys - set(keys)
+	left_over_keys = all_keys - set(mandatory_keys)
 
-	if len(left_over_keys) == 1 and left_over_keys == set(optional): # there's an extra key and it's cid
+	if len(left_over_keys) == 1 and left_over_keys == set(optional_keys): # there's an extra key and it's cid
 		return are_all_keys_valid(passport)
 	assert False, "Extra unrecognized keys {}".format(left_over_keys)
 

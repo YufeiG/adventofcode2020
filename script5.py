@@ -24,6 +24,5 @@ with open('input5.txt', 'r') as f:
 	print("Max: {}".format(all_ids[-1]))
 
 	for i, seat_id in enumerate(all_ids[:-1]):
-		after = all_ids[i+1]
-		if seat_id + 2 == after:
+		if seat_id + 2 == all_ids[i+1]:
 			print("My seat: {}".format(seat_id + 1))

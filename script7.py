@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
 import re
-bags = { "light red": [(2, 1), (3, 2)], # light red
-	1: [(2, 3), (3, 4)], # dark orange
-	2: [(4, 1)], # bright white
-	3: [(4, 2), (7, 9)], # muted yellow
-	4: [(5, 1), (6, 2)], # shiny gold
-	5: [(7, 3), (8, 4)], # dark olive
-	6: [(7, 5), (8, 6)], # vibrant plum
-	7: [], # faded blue
-	8: [], # dotted black
-
-}
 
 encoded_bags = {} # {string: {string : int}}
 def encode_line(line):
@@ -30,7 +19,6 @@ def encode_line(line):
 	encoded_bags[bag_type] = inner_bag_dict
 	print(bag_type)
 
-
 def can_fit(bag_to_find, bag_type) -> bool:
 	inner = encoded_bags[bag_type]
 	for inner_bag_type, count in inner.items():
@@ -41,33 +29,23 @@ def can_fit(bag_to_find, bag_type) -> bool:
 				return True
 	return False
 
-
 def find_combinations(bag_to_find):
 	# returns [str] of other bags that can contain
 	ret = []
 	for bag_type, inner in encoded_bags.items():
 		if can_fit(bag_to_find, bag_type):
 			ret.append(bag_type)
-	print(ret)
-	print(len(ret))
 
-cache = {} # str: int
 def count_inner(bag_type) -> int:
 	inner = encoded_bags[bag_type]
-	if len(inner) == 0:
-		return 0
-
 	total = 0
 	for inner_bag_type, count in inner.items():
 		c = count_inner(inner_bag_type)
 		total += c*count + count
 	return total
 
-
-
-
 with open('input7.txt', 'r') as f:
 	for line in f:
 		encode_line(line)
-	#find_combinations("shiny gold")
+	find_combinations("shiny gold")
 	print(count_inner("shiny gold"))

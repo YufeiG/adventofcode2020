@@ -17,7 +17,6 @@ def encode_line(line):
 		inner_bag_name = inner_match.group(2)
 		inner_bag_dict[inner_bag_name] = int(inner_count)
 	encoded_bags[bag_type] = inner_bag_dict
-	print(bag_type)
 
 def can_fit(bag_to_find, bag_type) -> bool:
 	inner = encoded_bags[bag_type]
@@ -35,6 +34,7 @@ def find_combinations(bag_to_find):
 	for bag_type, inner in encoded_bags.items():
 		if can_fit(bag_to_find, bag_type):
 			ret.append(bag_type)
+	return ret
 
 def count_inner(bag_type) -> int:
 	inner = encoded_bags[bag_type]
@@ -47,5 +47,5 @@ def count_inner(bag_type) -> int:
 with open('input7.txt', 'r') as f:
 	for line in f:
 		encode_line(line)
-	find_combinations("shiny gold")
+	print(len(find_combinations("shiny gold")))
 	print(count_inner("shiny gold"))

@@ -4,7 +4,7 @@ import re
 def find_sum(sum_value, numbs) -> (int, int):
 	# return indices in numbs
 	for i in range(len(numbs)):
-		for j in range(1, len(numbs)):
+		for j in range(i+1, len(numbs)):
 			if numbs[i] + numbs[j] == sum_value:
 				return (i, j)
 	return None
@@ -25,6 +25,7 @@ with open('input9.txt', 'r') as f:
 	i = 0
 	preamble = []
 	all_numbs = []
+	w = None
 	for line in f:
 		number = int(line.strip())
 		all_numbs.append(number)
@@ -33,11 +34,12 @@ with open('input9.txt', 'r') as f:
 		else:
 			s = find_sum(number, preamble)
 			if s is None:
-				print(number)
+				w = number
 			preamble.pop(0)
 			preamble.append(number)
 		i += 1
-	b = find_set(57195069, all_numbs)
+	assert w is not None
+	b = find_set(w, all_numbs)
 	if b is not None:
 		l = all_numbs[b[0]:b[1]+1]
 		print(max(l))

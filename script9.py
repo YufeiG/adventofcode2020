@@ -12,9 +12,8 @@ def find_sum(sum_value, numbs) -> (int, int):
 def find_set(sum_value, numbs) -> (int, int):
 	# returns start and end indices
 	for i in range(len(numbs)):
-		current_sum = numbs[i]
 		for j in range(i+1, len(numbs)):
-			current_sum += numbs[j]
+			current_sum = sum(numbs[i:j+1])
 			if sum_value == current_sum:
 				return (i, j)
 			elif sum_value < current_sum:
@@ -41,7 +40,6 @@ with open('input9.txt', 'r') as f:
 	b = find_set(57195069, all_numbs)
 	if b is not None:
 		l = all_numbs[b[0]:b[1]+1]
-		print(b)
 		print(max(l))
 		print(min(l))
 		print(max(l) + min(l))

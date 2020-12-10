@@ -7,10 +7,11 @@ with open('input10.txt', 'r') as f:
 
 	one = 0
 	three = 0
-	previous_x = adapters[0]
-	assert previous_x in [1, 2, 3]
-	differences = [previous_x]
-	for x in adapters[1:]:
+	previous_x = 0
+
+	consecutive_ones = 0
+	groups_of_ones = []
+	for x in adapters + [adapters[-1] + 3 ]:
 		d = x - previous_x
 		if d == 1:
 			one += 1
@@ -18,29 +19,27 @@ with open('input10.txt', 'r') as f:
 			three += 1
 		else:
 			assert False, d
-		differences.append(d)
 		previous_x = x
-	print((1+one) * (1+three))
-	differences.append(3) # the device
 
-	# differences contains 1 or 3
-	consec_i = 0
-	summed_differences = []
-	for i in differences:
-		if i == 1:
-			consec_i += 1
-		elif consec_i > 0:
-			summed_differences.append(consec_i-1)
-			consec_i = 0
+		if d == 1:
+			consecutive_ones += 1
+		elif consecutive_ones > 0:
+			groups_of_ones.append(consecutive_ones)
+			consecutive_ones = 0
+
+	print((one) * (three)) # 2048
 
 	product = 1
-	for s in summed_differences:
-		if s == 0:
-			continue # do nothing
-		elif s == 1 or s == 2:
-			product = product * (2**s)
-		elif s == 3:
-			product = product * ((2 ** s) - 1)
+	for s in groups_of_ones:
+		# a difference of s means s + 1 adapters, but we can't
+		# remove the outer 2 adapters because they border a difference of 3,
+		# so we work with s - 1 adapters that we could potentially remove
+		if s == 1:
+			continue # do nothing, one 1 between two 3s can never be removed
+		elif s == 2 or s == 3:
+			product = product * (2**(s - 1))
+		elif s == 4:
+			product = product * ((2**(s - 1)) - 1) # minus the one case where all three 1s were removed
 		else:
 			assert False, s
 	print(product) # 1322306994176

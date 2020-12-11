@@ -20,13 +20,7 @@ def check_adjacent_seats(i, j) -> int:
 def check_is_occupied(i, j, dir_x, dir_y) -> bool:
     x = i
     y = j
-
-    while(True):
-        if x < 0 or y < 0:
-            break
-        if x >= len(seats) or y >= len(seats[0]):
-            break
-
+    while(x >= 0 and y >= 0 and x < len(seats) and y < len(seats[0])):
         if x != i or y != j:
             seat = seats[x][y]
             if seat == "#":
@@ -61,7 +55,7 @@ def count_occupied() -> int:
             if seat == "#":
                 n += 1
     return n
-    
+
 with open('input11.txt', 'r') as f:
     for line in f:
         assert len(line.strip()) > 0

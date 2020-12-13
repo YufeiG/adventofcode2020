@@ -8,28 +8,18 @@ def multiply_list(myList) :
          result = result * x 
     return result 
 
-
-with open('input13.txt', 'r') as f:
-	earliest_time = int(f.readline())
-	buses = f.readline().split(",")
-
+def part1(bus_and_offset, earliest_time) -> int:
 	shortest_time = None
 	shortest_n = None
+	for (i, bus) in bus_and_offset:
+		time = bus - earliest_time%bus
+		if shortest_time is None or shortest_time > time:
+			shortest_time = time
+			shortest_n = bus
+	return shortest_n*shortest_time
 
-	bus_and_offset = []
-	first_n = int(buses[0])
 
-	for i, bus in enumerate(buses):
-		if bus != "x":
-			bus_n = int(bus)
-			bus_and_offset.append((i, bus_n))
-
-			time = bus_n - earliest_time%bus_n
-			if shortest_time is None or shortest_time > time:
-				shortest_time = time
-				shortest_n = bus_n
-	print(shortest_n*shortest_time) # part 1
-
+def part2(bus_and_offset) -> int:
 	largest_step_size = None
 	largest_step_size_i = None
 	for (reference_i, reference_bus) in bus_and_offset:
@@ -49,13 +39,17 @@ with open('input13.txt', 'r') as f:
 	n = 0
 	while True:
 		time_to_check = n*largest_step_size
-		skip = False
-		for (i, bus) in bus_and_offset:
-			if (time_to_check - largest_step_size_i + i) % bus != 0:
-				skip = True
-				break
-		if skip:
+		if any((time_to_check - largest_step_size_i + i) % bus != 0 for (i, bus) in bus_and_offset):
 			n += 1
 		else:
-			print(time_to_check - largest_step_size_i) # part 2
-			break
+			return time_to_check - largest_step_size_i
+
+with open('input13.txt', 'r') as f:
+	earliest_time = int(f.readline())
+	buses = f.readline().split(",")
+
+	bus_and_offset = [(i, int(bus)) for i, bus in enumerate(buses) if bus != "x"]
+
+	print(part1(bus_and_offset, earliest_time))
+
+	print(part2(bus_and_offset))

@@ -2,6 +2,14 @@
 import re
 from math import floor, gcd
 
+def multiplyList(myList) :
+     
+    # Multiply elements one by one
+    result = 1
+    for x in myList:
+         result = result * x 
+    return result 
+
 def lcm(a, b):
     return abs(a*b) // gcd(a, b)
 
@@ -44,6 +52,8 @@ with open('input13.txt', 'r') as f:
 	shortest_n = None
 
 	bus_and_offset = []
+	first_n = int(buses[0])
+
 	for i, bus in enumerate(buses):
 		if bus != "x":
 			bus_n = int(bus)
@@ -57,15 +67,38 @@ with open('input13.txt', 'r') as f:
 				shortest_n = bus_n
 	print(shortest_n*shortest_time)
 
+
 	bus_and_offset.sort(key=lambda x: x[1])
 	print(bus_and_offset)
 	(max_i, max_n) = bus_and_offset[-1]
 	q_pairs = []
+	o = []
 	for (di, pi) in reversed(bus_and_offset[:-1]):
+		if abs(max_i - di) == pi:
+			o.append(pi)
 		(q1, qi) = calculate_for_pair_with_flex_difference(max_n, pi, max_i - di)	
 		print("p1 {} p2 {} difference {} q1 {} q2 {}".format(max_n, pi, max_i - di, q1, qi))
 
 		q_pairs.append((q1, pi))
+
+	prod = max_n * multiplyList(o)
+	print(prod)
+	i = 5473171
+	while True:
+		p = i*prod
+		# check all buses
+		skip = False
+		for (j, bus) in bus_and_offset:
+			if (p - max_i + j) % bus != 0:
+				skip = True
+				break
+		if skip:
+			i += 1
+		else:
+			print(p - max_i)
+			exit()
+
+	exit()
 
 	# find in q_pairs where q1*max_n + max_n* pi*h are all equal for integer h
 	h = 0
@@ -120,3 +153,22 @@ with open('input13.txt', 'r') as f:
 			print(max_product)
 			print(max_i)
 			exit()
+
+	first_n = int(buses[0])
+	bus_n_at_first_index = int(buses[first_n])
+	prod = first_n * bus_n_at_first_index
+	i = 0
+	while True:
+		p = i * prod
+		# check all buses
+		skip = False
+		for (j, bus) in bus_and_offset:
+			if (p - first_n + j) % bus != 0:
+				skip = True
+				break
+		if skip:
+			i += 1
+		else:
+			print(p - first_n)
+			exit()
+	exit()
